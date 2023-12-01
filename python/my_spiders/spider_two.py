@@ -26,3 +26,6 @@ class spider_one(scrapy.Spider):
         process.crawl(self)
         process.start()
         process.stop()
+
+    def getname():
+        return "spider_two"

@@ -4,6 +4,7 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 import os
 
+
 class spider_one(scrapy.Spider):
 ## First Read through our dataset and select the url's
     name = 'spider_one'
@@ -26,3 +27,6 @@ class spider_one(scrapy.Spider):
         process.crawl(self)
         process.start()
         process.stop()
+
+    def getname():
+        return "spider_one"

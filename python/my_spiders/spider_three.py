@@ -1,3 +1,4 @@
+from typing import Any
 import scrapy
 import csv
 from scrapy.crawler import CrawlerProcess
@@ -26,3 +27,6 @@ class spider_one(scrapy.Spider):
         process.crawl(self)
         process.start()
         process.stop()
+
+    def get_name():
+        return "spider_three"

@@ -17,8 +17,3 @@ class LogReader:
         self.runner.join()
         self.runner.stop()
 
-if __name__ == "__main__":
-    log_reader = LogReader(spider_one)
-    log_reader.run_spider()
-    logged_data = log_reader.log_messages
-    print(logged_data)
