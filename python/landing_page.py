@@ -68,8 +68,6 @@ def on_crawl_clicked():
         return
 
 # from url in list, pull the ip, append to the api url, pull all json info
-
-
 # Pulling JSON info
 
 #report button ("Would you like to report this malicious page to Google? | -> send them to googles report page")
