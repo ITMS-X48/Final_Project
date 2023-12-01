@@ -20,6 +20,7 @@ class spider_one(scrapy.Spider):
         ip_address = response.json().get('origin')
         return ip_address
 
+
 def run_spider_three(self):
     process = CrawlerProcess(get_project_settings())
     process.crawl(self)
