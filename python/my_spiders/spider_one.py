@@ -1,7 +1,9 @@
 import scrapy
 import csv
+from scrapy.crawler import CrawlerProcess
+from scrapy.utils.project import get_project_settings
 
-class spider_one(scrapy.spider):
+class spider_one(scrapy.Spider):
 ## First Read through our dataset and select the url's
     name = 'uno'
     def start_requests(self):
@@ -17,3 +19,8 @@ class spider_one(scrapy.spider):
     def parse(self, response):
         ip_address = response.json().get('origin')
         return ip_address
+
+def run_spider_one(self):
+    process = CrawlerProcess(get_project_settings())
+    process.crawl(spider_one)
+    process.start()
