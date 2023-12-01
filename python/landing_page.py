@@ -67,11 +67,8 @@ def on_crawl_clicked():
         print("Please select a spider")
         return
 
-
 # from url in list, pull the ip, append to the api url, pull all json info
 # Pulling JSON info
-
-
 
 #report button ("Would you like to report this malicious page to Google? | -> send them to googles report page")
 def link():
@@ -81,9 +78,8 @@ def link():
 report_button = Button(window, text = "Report Malicious Page", command=link)
 report_button.pack(pady=20)
 
-
 #pdf button ("Copy of Report")
 
-window.mainloop()
-
 #Requirements: IP, Web certifications, Domain information, Location, Direct URLs, Images (if availiable), and Video
+
+window.mainloop()
