@@ -3,7 +3,7 @@ import csv
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 
-class spider_three(scrapy.Spider):
+class spider_one(scrapy.Spider):
 ## First Read through our dataset and select the url's
     name = 'tres'
     def start_requests(self):
@@ -22,5 +22,5 @@ class spider_three(scrapy.Spider):
 
 def run_spider_three(self):
     process = CrawlerProcess(get_project_settings())
-    process.crawl(spider_three)
+    process.crawl(self)
     process.start()
