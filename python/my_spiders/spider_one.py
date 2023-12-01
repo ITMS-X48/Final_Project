@@ -3,13 +3,14 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 from webscrape import LogReader
 import scrapy
+import json
 import os
 
 class spider_one(scrapy.Spider):
 ## First Read through our dataset and select the url's
     name = 'spider_one'
     def start_requests(self):
-        csv_file_path = os.path.abspath('datasets/benign_list_big_dataset.csv')
+        csv_file_path = os.path.abspath('python/my_spiders/datasets/benign_list_big_final.csv')
         with open(csv_file_path, 'r') as file:
             reader = csv.reader(file)
             next(reader)
@@ -18,8 +19,23 @@ class spider_one(scrapy.Spider):
                 yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        ip_address = response.json().get('origin')
-        return ip_address
+        if not response.body:
+            self.logger.warning('Empty response: %s', response.url)
+            return
+
+        # Check if the response is JSON
+        content_type = response.headers.get(b'Content-Type', b'').decode('utf-8').lower()
+        if b'application/json' in content_type:
+            if response.status == 200:
+                try:
+                    data = json.loads(response.body)
+                    if 'origin' in data and re.match(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', data['origin']):
+                        ip_address = data['origin']
+                        self.logger.info('IP Address: %s', ip_address)
+                except json.JSONDecodeError as e:
+                    self.logger.error('Error decoding JSON: %s', str(e))
+        else:
+            self.logger.warning('Response is not JSON: %s', response.url)
     
 def run_spider_one():
     process = CrawlerProcess(get_project_settings())

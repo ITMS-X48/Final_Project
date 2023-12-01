@@ -8,7 +8,7 @@ class spider_one(scrapy.Spider):
 ## First Read through our dataset and select the url's
     name = 'spider_two'
     def start_requests(self):
-        csv_file_path = os.path.abspath('datasets/malware_dataset.csv')
+        csv_file_path = os.path.abspath('python/my_spiders/datasets/malware_dataset.csv')
         with open(csv_file_path, 'r') as file:
             reader = csv.reader(file)
             next(reader)
