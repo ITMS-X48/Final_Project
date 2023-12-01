@@ -21,7 +21,7 @@ class spider_one(scrapy.Spider):
 ## Scrape the URL IP address
     def parse(self, response):
         ip_address = response.json().get('origin')
-        self.log(ip_address)
+        return ip_address
 
     def run_spider_one():
         process = CrawlerProcess(get_project_settings())
