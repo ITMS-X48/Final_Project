@@ -1,14 +1,19 @@
 import csv
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from webscrape import LogReader
 import scrapy
 import json
 import os
+import re
 
 class spider_one(scrapy.Spider):
 ## First Read through our dataset and select the url's
     name = 'spider_one'
+    scraped_ips = []
+    settings = {
+        'CLOSESPIDER_ITEMCOUNT': 50,
+    }
+
     def start_requests(self):
         csv_file_path = os.path.abspath('python/my_spiders/datasets/benign_list_big_final.csv')
         with open(csv_file_path, 'r') as file:
@@ -32,6 +37,9 @@ class spider_one(scrapy.Spider):
                     if 'origin' in data and re.match(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', data['origin']):
                         ip_address = data['origin']
                         self.logger.info('IP Address: %s', ip_address)
+                        self.scraped_ips.appenf(ip_address)
+                        if len(self.scraped_ips) >= self.settings.get('CLOSESPIDER_ITEMCOUNT'):
+                            self.crawler.engine.close_spider(self, 'item_count_reached')
                 except json.JSONDecodeError as e:
                     self.logger.error('Error decoding JSON: %s', str(e))
         else:
