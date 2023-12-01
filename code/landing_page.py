@@ -12,19 +12,15 @@ window.title("Dummy Name")
 label = tk.Label(window, text="Welcome to Dummy Name", font=('Courier 22 bold'))
 label.pack(padx=20, pady=20)
 
-# how_to_use = tk.Label(window, text="Enter your URL in the target box below to run the crawler. Example targets include: https://www.reddit.com/ or https://www.nytimes.com/", font=('Courier', 12))
-# how_to_use.pack(padx=20, pady=20)
+#how to use label
+how_to_label = Label(window, text="How To Use:", font = ('Courier', 15))
+how_to_label.pack()
 
-#dummy text widget
-trial = Text(window, height = 5, width = 52)
+#how to use info block
+how_to_info = "Enter a website URL in the target box below to run the crawler. Example targets include:\n" "https://www.reddit.com/ or https://www.nytimes.com/\n"
 
-#how to use
-how_to_box = tk.Label(window, text="How to Use", font=('Courier', 15))
-how_to_box.pack(padx=20, pady=20)
-
-how_to_info = "Enter your URL in the target box below to run the crawler. Example targets include: https://www.reddit.com/ or https://www.nytimes.com/"
-
-trial.insert(tk.END, how_to_info)
+how_to_use = tk.Label(window, text=how_to_info, font=('Courier', 12), justify=tk.LEFT, wraplength=window.winfo_screenwidth() - 40)
+how_to_use.pack(padx=20, pady=20)
 
 #target label for user input
 target = Label(window, text="Target:", font = ('Courier', 15))
@@ -37,7 +33,6 @@ input.pack()
 
 #button to validate
 tk.Button(window, text = "Go Crawl", width = 20).pack(pady=20)
-
 
 #output (in same page)
 
