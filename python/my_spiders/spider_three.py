@@ -1,4 +1,3 @@
-from typing import Any
 import scrapy
 import csv
 from scrapy.crawler import CrawlerProcess
@@ -9,7 +8,7 @@ class spider_one(scrapy.Spider):
 ## First Read through our dataset and select the url's
     name = 'spider_three'
     def start_requests(self):
-        csv_file_path = os.path.abspath('datasets/phishing_dataset.csv')
+        csv_file_path = os.path.abspath('python/datasets/phishing_dataset.csv')
         with open(csv_file_path, 'r') as file:
             reader = csv.reader(file)
             next(reader)
@@ -21,12 +20,8 @@ class spider_one(scrapy.Spider):
     def parse(self, response):
         ip_address = response.json().get('origin')
         self.log(ip_address)
-
-    def run_spider_three(self):
-        process = CrawlerProcess(get_project_settings())
-        process.crawl(self)
-        process.start()
-        process.stop()
-
-    def get_name():
-        return "spider_three"
+    
+def run_spider_three(self):
+    process = CrawlerProcess(get_project_settings())
+    process.crawl(self)
+    process.start()
