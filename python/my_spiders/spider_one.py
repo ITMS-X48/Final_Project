@@ -37,13 +37,26 @@ class spider_one(scrapy.Spider):
                     if 'origin' in data and re.match(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', data['origin']):
                         ip_address = data['origin']
                         self.logger.info('IP Address: %s', ip_address)
-                        self.scraped_ips.appenf(ip_address)
+                        self.scraped_ips.append(ip_address)
                         if len(self.scraped_ips) >= self.settings.get('CLOSESPIDER_ITEMCOUNT'):
                             self.crawler.engine.close_spider(self, 'item_count_reached')
                 except json.JSONDecodeError as e:
                     self.logger.error('Error decoding JSON: %s', str(e))
         else:
             self.logger.warning('Response is not JSON: %s', response.url)
+
+    def stop_spider(self):
+        self.logger.info('stopping spider...')
+        self.closeSpider('Terminated')
+    
+    def closeSpider(self, spider, reason):
+        self.logger.info('Spider closed: %s', reason)
+        self.process_ips()
+    
+    def process_ips(self): 
+        self.logger.info('Scraped IPs:%s', self.scraped_ips)
+        for x in self.scraped_ips:
+            print(x)
     
 def run_spider_one():
     process = CrawlerProcess(get_project_settings())
