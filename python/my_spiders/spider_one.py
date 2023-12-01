@@ -5,7 +5,7 @@ class spider_one(scrapy.spider):
 ## First Read through our dataset and select the url's
     name = 'uno'
     def start_requests(self):
-        csv_file_path = 'datasets/benign.csv'
+        csv_file_path = 'datasets/benign_list_big_final.csv'
         with open(csv_file_path, 'r') as file:
             reader = csv.reader(file)
             next(reader)
