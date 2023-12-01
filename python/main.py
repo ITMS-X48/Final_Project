@@ -1,16 +1,20 @@
-from my_spiders.spider_one import spider_one
-from my_spiders.spider_two import spider_two
-from my_spiders.spider_three import spider_three
+from my_spiders import spider_one, spider_two, spider_three
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from webscrape import LogReader
+
+def run_spider_one():
+    process = CrawlerProcess(get_project_settings())
+    process.crawl(spider_one)
+    process.start()
+
+def run_spider_two():
+    process = CrawlerProcess(get_project_settings())
+    process.crawl(spider_two)
+    process.start()
+
+def run_spider_three():
+    process = CrawlerProcess(get_project_settings())
+    process.crawl(spider_three)
+    process.start()
 
 ## Implement GUI here
-
-if __name__ == "__main__":
-    spider_one.run_spider_one()
-    log_reader = LogReader(spider_one)
-    log_reader.run_spider()
-    logged_data = log_reader.log_messages
-    print(logged_data)
-
