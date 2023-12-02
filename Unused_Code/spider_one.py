@@ -10,23 +10,28 @@ from twisted.internet.error import DNSLookupError
 class spider_one(scrapy.Spider):
     name = 'spider_one'
     scraped_ips = []
-    http_bad_status_list = [301, 302, 400, 401, 402, 403, 404, 410]
-
-    custom_settings = {
-        'CLOSESPIDER_ITEMCOUNT': 5,
+    CLOSESPIDER_ITEMCOUNT = 5
+    meta = {
+        'dont_redirect': true,
+        "handle_httpstatus_list": [301, 302, 400, 401, 402, 403, 404, 410]
     }
 
     def start_requests(self):
         csv_file_path = os.path.abspath('python/my_spiders/datasets/benign_list_big_final.csv')
-        with open(csv_file_path, 'r') as file:
+        with open(csv_file_path, 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
             next(reader)
             for row in reader:
-                url = row[0]
-                yield scrapy.Request(url=url, callback=self.parse)
-
+                try:
+                    url = row[0]
+                    yield scrapy.Request(url=url, callback=self.parse)
+                except UnicodeDecodeError:
+                    continue
     def parse(self, response):
 ## This try handles DNS lookup errors
+## Hardcoded stop to check only so many ips
+        if len(self.scraped_ips) >= self.meta[CLOSESPIDER_ITEMCOUNT]:
+            self.crawler.engine.close_spider(self, 'item_count_reached')
         try:
 ## Checks for no response from site
             if not response.body:
@@ -45,9 +50,6 @@ class spider_one(scrapy.Spider):
                             ip_address = data['origin']
                             self.logger.info('IP Address: %s', ip_address)
                             self.scraped_ips.append(ip_address)
-## Hardcoded stop to check only so many ips
-                            if len(self.scraped_ips) >= self.custom_settings['CLOSESPIDER_ITEMCOUNT']:
-                                self.crawler.engine.close_spider(self, 'item_count_reached')
                     except json.JSONDecodeError as e:
                         self.logger.error('Error decoding JSON: %s', str(e))
                 elif response.status in self.http_bad_status_list:
