@@ -8,4 +8,6 @@ st = ip_puller()
 st.run_pull()
 print(st.ips)
 
-new_ip = set(st.ips)
+# api_caller = 'https://api.ip2location.io/?key=A8EDA2B1A861BF908F3EC687E20C9CC7&ip='
+# for row in st.ips:
+#     scraper.scrape(api_caller + row)
