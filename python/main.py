@@ -2,7 +2,7 @@
 # from scrapy.crawler import CrawlerProcess
 # from scrapy.utils.project import get_project_settings
 # from webscrape import LogReader
-from my_spiders.socketstest import ip_puller
+from sockets_script import ip_puller
 
 st = ip_puller()
 st.run_pull()
