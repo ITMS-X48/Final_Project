@@ -17,6 +17,8 @@ window = tk.Tk()
 window.geometry("900x700")
 window.title("IMTS-X48")
 
+ip_sets = set()
+
 #intro
 label = tk.Label(window, text="Welcome to Sneaky Web Crawler", font=('Courier 22 bold'))
 label.pack(padx=20, pady=20)
@@ -60,18 +62,24 @@ def on_crawl_clicked():
         print("This will take some time please allow 30 minutes to 1 hour")
         ippbenign.run_pull()
         print(ippbenign.ips)
+        for row in ippbenign.ips:
+            ip_sets.add(row)
         print("Checking for success")
     elif selected_option == "Malware Dataset":
         ippmal = ip_puller('python/datasets/malware_dataset.csv')
         print("This will take some time please allow 30 minutes to 1 hour")
         ippmal.run_pull()
         print(ippmal.ips)
+        for row in ippmal.ips:
+            ip_sets.add(row)
         print("Checking for success")
     elif selected_option == "Phishing Dataset":
         ippphish = ip_puller('python/datasets/phishing_datset.csv')
         print("This will take some time please allow 30 minutes to 1 hour")
         ippphish.run_pull()
-        print(ippbenign.ips)
+        print(ippphish.ips)
+        for row in ippphish.ips:
+            ip_sets.add(row)
         print("Checking for success")
     else:
         print("Please select an IP Puller")

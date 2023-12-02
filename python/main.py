@@ -7,3 +7,5 @@ from sockets_script import ip_puller
 st = ip_puller()
 st.run_pull()
 print(st.ips)
+
+new_ip = set(st.ips)
