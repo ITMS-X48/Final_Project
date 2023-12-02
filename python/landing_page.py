@@ -11,6 +11,7 @@ from my_spiders import spider_three
 import json
 import requests
 import webbrowser
+from sockets_script import ip_puller
 
 window = tk.Tk()
 window.geometry("900x700")
@@ -55,16 +56,25 @@ tk.Button(window, text = "Go Crawl", command = show, width = 20).pack(pady=20)
 def on_crawl_clicked():
     selected_option = clicked.get()
     if selected_option == "Benign List":
-        spider_one.run_spider_one()
+        ippbenign = ip_puller('python/datasets/benign_list_big_final.csv')
+        print("This will take some time please allow 30 minutes to 1 hour")
+        ippbenign.run_pull()
+        print(ippbenign.ips)
         print("Checking for success")
     elif selected_option == "Malware Dataset":
-        spider_two.run_spider_two()
+        ippmal = ip_puller('python/datasets/malware_dataset.csv')
+        print("This will take some time please allow 30 minutes to 1 hour")
+        ippmal.run_pull()
+        print(ippmal.ips)
         print("Checking for success")
     elif selected_option == "Phishing Dataset":
-        spider_three.run_spider_three()
+        ippphish = ip_puller('python/datasets/phishing_datset.csv')
+        print("This will take some time please allow 30 minutes to 1 hour")
+        ippphish.run_pull()
+        print(ippbenign.ips)
         print("Checking for success")
     else:
-        print("Please select a spider")
+        print("Please select an IP Puller")
         return
 
 # from url in list, pull the ip, append to the api url, pull all json info
